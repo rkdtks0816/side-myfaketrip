@@ -58,6 +58,7 @@ import swiperCp from '@/components/swiper-cp.vue';
 import footerCp from '@/components/footer-cp.vue';
 import headerCp from '@/components/header-cp.vue';
 import { onMounted, ref } from 'vue';
+const address = 'http://59.3.14.15:8012'
 
 onMounted(()=>{
     loadcityInfo();
@@ -102,7 +103,7 @@ async function loadCateGuideList() {
 async function getcityInfo() {
 
     var rows = await $.ajax({
-        url: `http://localhost:3000/cityInfo`,
+        url: `${address}/cityInfo`,
         method: 'GET',
         dataType: 'json',    
     })
@@ -113,7 +114,7 @@ async function getcityInfo() {
 async function getbanner() {
 
     var rows = await $.ajax({
-        url: `http://localhost:3000/banner`,
+        url: `${address}/banner`,
         method: 'GET',
         dataType: 'json',    
     })
@@ -124,7 +125,7 @@ async function getbanner() {
 async function getcategory(option) {
 
     var rows = await $.ajax({
-        url: `http://localhost:3000/category/${encodeURIComponent(option)}`,
+        url: `${address}/category/${encodeURIComponent(option)}`,
         method: 'GET',
         dataType: 'json',    
     })

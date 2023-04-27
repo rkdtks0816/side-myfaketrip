@@ -1,13 +1,24 @@
 <template>
-    <div class="bg-image" :style="`background-image: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('${route.query.image}'); background-size: cover; background-position: center center;`">
-        <header-cp></header-cp>
-        <div class="mx-auto mb-5 text-center text-white pt-5 fw-bold" style="font-size: 54px; max-width: 1060px; height: 220px;">
-            {{ route.query.name }}
-        </div>
-    </div>
+    <header-cp></header-cp>
     <main>
-        <section class="mx-auto mb-5" style="max-width: 1060px;">
-            <swiperCp :swiperData="cityData" :swiperNum="0"></swiperCp>
+        <div class="d-flex mx-auto mt-5 justify-content-between" style="width: 1060px;">
+            <article class="mx-auto mb-5 text-center pt-5 fw-bold" style="width: 700px;">
+                <h1 class="text-start">{{ route.query.title }}</h1>
+                <div class="mt-5">
+                    <img class="w-100" :src="route.query.image">
+                </div>
+            </article>
+            <aside style="width: 320px;">
+                <h4 class="p-5 border position-sticky" style="top: 80px;">{{ route.query.price }}원 / 1인</h4>
+            </aside>
+        </div>
+        <section class="border-top">
+            <div class="mx-auto mb-5" style="max-width: 1060px;">
+                <div class="fs-4 fw-bold mt-5 mb-3">
+                    {{ route.query.category }} 상품
+                </div>
+                <swiperCp :swiperData="cateList" :swiperNum="2"></swiperCp>
+            </div>
         </section>
     </main>
     <footer-cp></footer-cp>
@@ -20,23 +31,24 @@ import headerCp from '@/components/header-cp.vue';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router'
 const route = useRoute()
+const address = 'http://59.3.14.15:8012'
 
 onMounted(()=>{
-    loadCityData();
+    loadcateData();
 })
 
-let cityData = ref([])
+let cateList = ref([])
 
 
-async function loadCityData() {
-    let list = await getcityData(route.query.name);
-    cityData.ve = list;
+async function loadcateData() {
+    let list = await getcateData(route.query.category);
+    cateList.value = list;
 }
 
-async function getcityData(option) {
+async function getcateData(option) {
 
     var rows = await $.ajax({
-        url: `http://localhost:3000/cityName/${encodeURIComponent(option)}`,
+        url: `${address}/category/${encodeURIComponent(option)}`,
         method: 'GET',
         dataType: 'json',    
     })
